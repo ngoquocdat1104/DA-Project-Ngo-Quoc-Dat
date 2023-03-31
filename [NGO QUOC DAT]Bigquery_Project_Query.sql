@@ -1,4 +1,3 @@
---Lưu ý chung: với Bigquery thì mình có thể groupby, orderby 1,2,3(1,2,3() ở đây là thứ tự của column mà mình select nhé
 
 
 -- Query 01: calculate total visit, pageview, transaction and revenue for Jan, Feb and March 2017 order by month
@@ -41,7 +40,6 @@ with formatting as (
 )
 select case when week is not null then 'Week' end as time_type 
 -- bởi vì ta đã xác định từ đầu sẽ xử lý week và month riêng biệt nên cột time_type e sử dụng case when để trả giá trị mình muốn luôn
--- nếu có cách hop ly hơn thì anh/chị góp ý cho e với ạ :D
   , concat(year, week) as time
   , source
   , sum(`totalTransactionRevenue`)/1000000 as revenue
@@ -58,7 +56,7 @@ from formatting
 group by time_type, time, source
 order by revenue desc
 
---cách xử lý cho mình này nha e
+--cách 2
 with month_data as(
 SELECT
   "Month" as time_type,
@@ -217,7 +215,7 @@ where _table_suffix between '0701' and '0731'
 group by product.v2ProductName
 order by quantity desc
 
---khi lấy những điều kiện chính xác thì mình nên dùng = hoặc in  hoặc <>
+
 -------------------------------------------------------------------------------------------------------
 --Query 08: Calculate cohort map from pageview to addtocart to purchase in last 3 month. For example, 100% pageview then 40% add_to_cart and 10% purchase.
 #standardSQL
@@ -242,4 +240,4 @@ select sizing.month
   , round(num_purchase*100.0/num_product_view, 2) as purchase_rate
 from sizing
 
-                                                            ---very good---
+                                                            
